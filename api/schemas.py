@@ -16,3 +16,7 @@ class userCheck(BaseModel):
 
 class tokenVerifier(BaseModel):
     user_id: Optional[str] = None
+
+class token(BaseModel):
+    token: str
+    token_type: str
