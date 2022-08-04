@@ -2,7 +2,7 @@ from fastapi import status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 from routers import auth
 import re
-from api import db, models, schemas
+import db, models, schemas
 
 router = APIRouter()
 PASSWORD_REGEX = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"

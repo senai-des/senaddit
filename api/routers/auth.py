@@ -5,7 +5,7 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
-from api import models, schemas, db, settings_db
+import models, schemas, db, settings_db
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 router = APIRouter()
