@@ -1,9 +1,8 @@
-from api.models import Students
 import models 
 from db import SessionLocal, engine
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from .routers import students, authentication
+from routers import students, auth
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -27,4 +26,4 @@ def home_page() -> dict:
     return {"Fala cria": "Apizinha do Sennadit :)"}
 
 app.include_router(students.router, prefix="/students", tags=["Students"])
-app.include_router(authentication.router, tags=["Students"])
+app.include_router(auth.router, tags=["Students"])

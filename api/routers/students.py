@@ -1,6 +1,6 @@
 from fastapi import status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
-import authentication
+from routers import auth
 import re
 from api import db, models, schemas
 
@@ -11,7 +11,7 @@ PASSWORD_REGEX = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?
 async def newUser(user:schemas.newUser, db: Session = Depends(db.get_db)) -> schemas.userCheck:
     if re.match(PASSWORD_REGEX, user.password) is None:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Sua senha deve conter ao menos 8 caracteres, uma letra maiuscula, "f"uma letra minuscuka, um numero e um caracter especial")
-    user.password = authentication.hashPassword(user.password)
+    user.password = auth.hashPassword(user.password)
     existence = db.query(models.Students).filter(models.Students.email == user.email).first()
     if existence is not None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"email ja registrado (email: {user.email})")
