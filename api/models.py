@@ -6,14 +6,15 @@ from db import Base
 association_table = Table(
     "association",
     Base.metadata,
-    Column("student_id", ForeignKey("students.id"), primary_key=True),
-    Column("project_id", ForeignKey("projects.id"), primary_key=True),
+    user_id = Column("student_id", ForeignKey("students.id"), primary_key=True),
+    project_id = Column("project_id", ForeignKey("projects.id"), primary_key=True),
 )
 
 class Students(Base):
     __tablename__ = "students"
     id = Column(Integer, primary_key=True, autoincrement=True)
     user = Column(String[25], unique=True, nullable=False, index=True)
+    email = Column(String, nullable=False, unique=True)
     password = Column(String[25], unique=True, nullable=False, index=True)
     icon = Column(String[255], nullable=True, index=True)
     banner = Column(String[255], nullable=True, index=True)
