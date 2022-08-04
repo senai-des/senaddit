@@ -22,13 +22,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def get_db():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
-
 @app.get("/", tags=["Home"])
 def home_page() -> dict:
     return {"Fala cria": "Apizinha do Sennadit :)"}

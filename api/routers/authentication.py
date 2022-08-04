@@ -5,7 +5,7 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
-from api import models, schemas, main, settings_db
+from api import models, schemas, db, settings_db
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 router = APIRouter()
@@ -22,7 +22,7 @@ def accessToken(data: dict) -> str:
     jwt_str = jwt.encode(encode, key=SECRET_KEY, algorithm=ALGORITHM)
     return jwt_str
 
-def currentUser(token: str = Depends(oauth2_scheme), db: Session = Depends(main.get_db)) -> models.Projects:
+def currentUser(token: str = Depends(oauth2_scheme), db: Session = Depends(db.get_db)) -> models.Projects:
 
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Couldn't verify credentials", headers={"WWW-Authenticate": "Bearer"})
     token_data = checkaccessToken(token, credentials_exception)
@@ -46,7 +46,7 @@ def verifyPassword(password: str, hashed_password: str) -> bool:
     return pwd_context.verify(password, hashed_password)
 
 @router.post("/login", response_model=schemas.token)
-def userLogin(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(main.get_db)) -> schemas.token:
+def userLogin(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(db.get_db)) -> schemas.token:
     user = db.query(models.Students).filter_by(email=user_credentials.username).first()
     if user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="invalid credentials")
