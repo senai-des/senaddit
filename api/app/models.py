@@ -1,7 +1,7 @@
 import datetime
 from sqlalchemy import Column, String, Integer, DateTime, ARRAY, ForeignKey, Table
 from sqlalchemy.orm import relationship
-from db import Base
+from .db import Base
 
 association_table = Table(
     "association",

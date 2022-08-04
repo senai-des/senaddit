@@ -5,18 +5,18 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     database_url: Optional[str] = None
 
-    database: str = "sqlite"
+    database: str = "postgresql"
     host: str = "localhost"
-    port: str = "8000"
-    db_name: str = "sqlite"
-    db_user: str = "sqlite"
+    port: str = "5432"
+    db_name: str = "postgres"
+    db_user: str = "postgres"
     db_password: str = "1234"
 
     jwt_encode_key: str
     jwt_algorithm: str
 
     class Config:
-        env_file = ".venv"
+        env_file = ".env"
         env_file_encoding = "utf-8"
 
 

@@ -1,10 +1,10 @@
-import models 
-from db import SessionLocal, engine
+#from app import models 
+from .db import SessionLocal, engine
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from routers import students, auth
+from .routers import students, auth
 
-models.Base.metadata.create_all(bind=engine)
+#models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title = "Senaddit (Made by Miura)",
