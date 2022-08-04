@@ -1,5 +1,5 @@
 import models 
-from handler import SessionLocal, engine
+from db import SessionLocal, engine
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 

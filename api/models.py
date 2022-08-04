@@ -1,17 +1,17 @@
 import datetime
 from sqlalchemy import Column, String, Integer, DateTime, ARRAY, ForeignKey, Table
 from sqlalchemy.orm import relationship
-from handler import Base
+from db import Base
 
 association_table = Table(
     "association",
     Base.metadata,
-    Column("student_id", ForeignKey("student.id"), primary_key=True),
-    Column("project_id", ForeignKey("project.id"), primary_key=True),
+    Column("student_id", ForeignKey("students.id"), primary_key=True),
+    Column("project_id", ForeignKey("projects.id"), primary_key=True),
 )
 
 class Students(Base):
-    __tablename__ = "student"
+    __tablename__ = "students"
     id = Column(Integer, primary_key=True, autoincrement=True)
     user = Column(String[25], unique=True, nullable=False, index=True)
     password = Column(String[25], unique=True, nullable=False, index=True)
@@ -22,7 +22,7 @@ class Students(Base):
     habilities = Column(String, index=True, nullable=True)
     formation = Column(String, index=True, nullable=True)
 
-    stundents = relationship("Projects", secondary=association_table, back_populates="students")
+    projects = relationship("Projects", secondary=association_table, back_populates="students")
 
 
 class Projects(Base):
@@ -35,6 +35,4 @@ class Projects(Base):
     advisors = Column(String[255], nullable=True, index=True)
     segment = Column(String[25], nullable=False, index=True)
 
-    students = relationship(
-        "Students", secondary=association_table, back_populates="projects"
-    )
+    students = relationship("Students", secondary=association_table, back_populates="projects")
